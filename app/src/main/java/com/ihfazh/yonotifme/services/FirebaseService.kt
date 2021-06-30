@@ -59,7 +59,11 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
                 if (type == "feed"){
                     Log.d(TAG, "Intuk dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...")
                     val item = Json.decodeFromString<Item>(data)
-                    insertFeedUseCase.insert(item)
+                    sendNotification(item.title, item.description)
+                    val disposable = insertFeedUseCase.insert(item).subscribe{
+                        Log.d(TAG, "onMessageReceived: hallooooo aku sudah selesai save data.")
+                    }
+                    disposable.dispose()
                 }
             }
             Log.d(TAG, "data type: ${data!!::class.simpleName}")
@@ -69,11 +73,10 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
 
 
         remoteMessage.notification?.let {
-            sendNotification(it)
         }
     }
 
-    private fun sendNotification(remoteMessage: RemoteMessage.Notification) {
+    private fun sendNotification(title: String, description: String) {
         val channelId = getString(R.string.default_notification_channel_id)
         val channelName = getString(R.string.default_notification_channel_name)
 //        val intent = Intent(this, MainActivity::class.java)
@@ -83,8 +86,8 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
         val defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION)
         val notificationBuilder = NotificationCompat.Builder(this, channelId)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(remoteMessage.title)
-                .setContentText(remoteMessage.body)
+                .setContentTitle(title)
+                .setContentText(description)
                 .setAutoCancel(true)
                 .setSound(defaultSoundUri)
 //                .setContentIntent(pendingIntent)
