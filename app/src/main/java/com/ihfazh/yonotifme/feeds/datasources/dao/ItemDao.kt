@@ -11,7 +11,7 @@ import io.reactivex.Flowable
 @Dao
 interface ItemDao {
     @Query("select * from feed")
-    fun list(): Flowable<FeedItemEntity>
+    fun list(): Flowable<List<FeedItemEntity>>
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(feedItem: FeedItemEntity): Completable

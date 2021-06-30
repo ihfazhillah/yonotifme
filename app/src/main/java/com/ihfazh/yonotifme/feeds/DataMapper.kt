@@ -13,6 +13,17 @@ class DataMapper {
                 item.description
             )
         }
+
+        fun feedEntityMapper(entity: FeedItemEntity): Item {
+            return Item(
+                entity.title,
+                entity.guid,
+                entity.url,
+                entity.description,
+                null,
+                false
+            )
+        }
     }
 
 }

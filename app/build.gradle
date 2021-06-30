@@ -7,6 +7,10 @@ plugins {
     id 'dagger.hilt.android.plugin'
     id 'kotlinx-serialization'
 }
+kapt {
+    correctErrorTypes = true
+}
+
 
 android {
     compileSdkVersion 30
@@ -79,6 +83,8 @@ dependencies {
     // rxjava
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxandroid:$rxjava_android_version"
+    implementation "androidx.lifecycle:lifecycle-reactivestreams-ktx:$lifecycle_version"
+
 
     // hilt dagger
     implementation "com.google.dagger:hilt-android:$hilt_classpath_version"
@@ -89,5 +95,9 @@ dependencies {
 
     // json serialization
     implementation "org.jetbrains.kotlinx:kotlinx-serialization-json:1.2.1"
+
+    // epoxy
+    implementation "com.airbnb.android:epoxy:$epoxy_version"
+    kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
 
 }

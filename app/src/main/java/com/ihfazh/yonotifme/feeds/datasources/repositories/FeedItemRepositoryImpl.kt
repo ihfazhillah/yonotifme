@@ -5,6 +5,7 @@ import com.ihfazh.yonotifme.feeds.datasources.FeedDatabase
 import com.ihfazh.yonotifme.feeds.domain.models.Item
 import com.ihfazh.yonotifme.feeds.domain.repositories.FeedItemRepository
 import io.reactivex.Completable
+import io.reactivex.Flowable
 import javax.inject.Inject
 
 class FeedItemRepositoryImpl @Inject constructor(var localDataSource: FeedDatabase): FeedItemRepository {
@@ -12,5 +13,13 @@ class FeedItemRepositoryImpl @Inject constructor(var localDataSource: FeedDataba
         return localDataSource.feedItemDao().insert(
             DataMapper.feedItemMapper(item)
         )
+    }
+
+    override fun list(): Flowable<List<Item>> {
+        return localDataSource.feedItemDao().list().map{
+            it.map {
+                DataMapper.feedEntityMapper(it)
+            }
+        }
     }
 }

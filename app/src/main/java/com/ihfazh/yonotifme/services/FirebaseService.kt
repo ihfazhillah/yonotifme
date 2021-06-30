@@ -17,6 +17,7 @@ import com.ihfazh.yonotifme.feeds.domain.models.Item
 import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.schedulers.Schedulers
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
@@ -28,11 +29,11 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
     @Inject
     lateinit var insertFeedUseCase: InsertFeedUseCase
 
-    private val compositeDisposable = CompositeDisposable()
+//    private val compositeDisposable = CompositeDisposable()
 
     override fun onDestroy() {
         super.onDestroy()
-        compositeDisposable.dispose()
+//        compositeDisposable.dispose()
     }
 
     override fun onNewToken(token: String) {
@@ -41,6 +42,7 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
     }
 
     override fun onMessageReceived(remoteMessage: RemoteMessage) {
+        // baca ini https://stackoverflow.com/questions/37358462/firebase-onmessagereceived-not-called-when-app-in-background
         super.onMessageReceived(remoteMessage)
         Log.d(TAG, "onMessageReceived: ${remoteMessage.data}")
         Log.d(TAG, "onMessageReceived: ${remoteMessage.rawData}")
@@ -52,12 +54,12 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
             val type = remoteMessage.data["type"]
             val data = remoteMessage.data["data"]
 
+            Log.d(TAG, "Intuk dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...")
             if (type != null && data != null){
                 if (type == "feed"){
+                    Log.d(TAG, "Intuk dataaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa...")
                     val item = Json.decodeFromString<Item>(data)
-                    compositeDisposable.add(
-                            insertFeedUseCase.insert(item).subscribe()
-                    )
+                    insertFeedUseCase.insert(item)
                 }
             }
             Log.d(TAG, "data type: ${data!!::class.simpleName}")
