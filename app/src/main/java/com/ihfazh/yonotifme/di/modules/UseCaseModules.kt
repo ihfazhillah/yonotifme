@@ -1,5 +1,6 @@
 package com.ihfazh.yonotifme.di.modules
 
+import com.ihfazh.yonotifme.feeds.datasources.repositories.FeedItemRepositoryImpl
 import com.ihfazh.yonotifme.feeds.domain.repositories.FeedItemRepository
 import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCase
 import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCaseImpl
@@ -13,7 +14,7 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class UseCaseModules {
     @Provides
-    fun provideInsertFeedUseCase(feedItemRepository: FeedItemRepository): InsertFeedUseCase {
+    fun provideInsertFeedUseCase(feedItemRepository: FeedItemRepositoryImpl): InsertFeedUseCase {
         return InsertFeedUseCaseImpl(feedItemRepository)
     }
 }

@@ -26,6 +26,10 @@ buildscript {
 
         // gms
         classpath "com.google.gms:google-services:$gms_version"
+
+        // hilt
+        classpath "com.google.dagger:hilt-android-gradle-plugin:$hilt_classpath_version"
+        classpath "org.jetbrains.kotlin:kotlin-serialization:$kotlin_version"
     }
 }
 

@@ -7,7 +7,7 @@ import com.ihfazh.yonotifme.feeds.domain.repositories.FeedItemRepository
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class FeedItemRepositoryImpl(@Inject private val localDataSource: FeedDatabase): FeedItemRepository {
+class FeedItemRepositoryImpl @Inject constructor(var localDataSource: FeedDatabase): FeedItemRepository {
     override fun insert(item: Item): Completable {
         return localDataSource.feedItemDao().insert(
             DataMapper.feedItemMapper(item)

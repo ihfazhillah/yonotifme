@@ -5,7 +5,7 @@ import com.ihfazh.yonotifme.feeds.domain.repositories.FeedItemRepository
 import io.reactivex.Completable
 import javax.inject.Inject
 
-class InsertFeedUseCaseImpl(@Inject private val repository: FeedItemRepository): InsertFeedUseCase {
+class InsertFeedUseCaseImpl @Inject constructor(var repository: FeedItemRepository): InsertFeedUseCase {
     override fun insert(item: Item): Completable {
         return repository.insert(item)
     }

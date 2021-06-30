@@ -13,14 +13,27 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ihfazh.yonotifme.MainActivity
 import com.ihfazh.yonotifme.R
+import com.ihfazh.yonotifme.feeds.domain.models.Item
 import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCase
 import dagger.hilt.android.AndroidEntryPoint
+import io.reactivex.disposables.CompositeDisposable
+import kotlinx.serialization.decodeFromString
+import kotlinx.serialization.json.Json
 import javax.inject.Inject
+import kotlin.reflect.typeOf
 
 
 @AndroidEntryPoint
 class YNMFirebaseMessagingService: FirebaseMessagingService() {
-    @Inject lateinit var insertFeedUseCase: InsertFeedUseCase
+    @Inject
+    lateinit var insertFeedUseCase: InsertFeedUseCase
+
+    private val compositeDisposable = CompositeDisposable()
+
+    override fun onDestroy() {
+        super.onDestroy()
+        compositeDisposable.dispose()
+    }
 
     override fun onNewToken(token: String) {
         super.onNewToken(token)
@@ -32,6 +45,27 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
         Log.d(TAG, "onMessageReceived: ${remoteMessage.data}")
         Log.d(TAG, "onMessageReceived: ${remoteMessage.rawData}")
         Log.d(TAG, "onNotification: ${remoteMessage.notification}")
+
+        if (remoteMessage.data.isNotEmpty()){
+            Log.d(TAG, "type: ${remoteMessage.data["type"]}")
+            Log.d(TAG, "data: ${remoteMessage.data["data"]}")
+            val type = remoteMessage.data["type"]
+            val data = remoteMessage.data["data"]
+
+            if (type != null && data != null){
+                if (type == "feed"){
+                    val item = Json.decodeFromString<Item>(data)
+                    compositeDisposable.add(
+                            insertFeedUseCase.insert(item).subscribe()
+                    )
+                }
+            }
+            Log.d(TAG, "data type: ${data!!::class.simpleName}")
+
+
+        }
+
+
         remoteMessage.notification?.let {
             sendNotification(it)
         }
