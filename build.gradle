@@ -5,6 +5,10 @@ buildscript {
     ext.gms_version = "4.3.8"
     ext.firebase_version = "28.2.0"
 
+    ext.room_version = "2.3.0"
+    ext.rxjava_version = "2.2.21"
+    ext.rxjava_android_version = "2.1.1"
+
     repositories {
         google()
         jcenter()
