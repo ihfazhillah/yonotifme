@@ -9,6 +9,9 @@ buildscript {
     ext.rxjava_version = "2.2.21"
     ext.rxjava_android_version = "2.1.1"
 
+    ext.hilt_classpath_version = "2.33-beta"
+    ext.hilt_jetpack_version = "1.0.0-alpha03"
+
     repositories {
         google()
         jcenter()

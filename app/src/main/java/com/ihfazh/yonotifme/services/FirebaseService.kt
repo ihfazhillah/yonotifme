@@ -13,8 +13,15 @@ import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import com.ihfazh.yonotifme.MainActivity
 import com.ihfazh.yonotifme.R
+import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCase
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+
+@AndroidEntryPoint
 class YNMFirebaseMessagingService: FirebaseMessagingService() {
+    @Inject lateinit var insertFeedUseCase: InsertFeedUseCase
+
     override fun onNewToken(token: String) {
         super.onNewToken(token)
         Log.d(TAG, "onNewToken: this your new token $token")

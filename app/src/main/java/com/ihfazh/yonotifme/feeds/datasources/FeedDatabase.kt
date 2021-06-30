@@ -1,6 +1,7 @@
 package com.ihfazh.yonotifme.feeds.datasources
 
 import androidx.room.Database
+import androidx.room.RoomDatabase
 import com.ihfazh.yonotifme.feeds.datasources.dao.ItemDao
 import com.ihfazh.yonotifme.feeds.datasources.entities.FeedItemEntity
 
@@ -9,6 +10,6 @@ import com.ihfazh.yonotifme.feeds.datasources.entities.FeedItemEntity
     version = 1,
     exportSchema = true
 )
-abstract class FeedDatabase {
+abstract class FeedDatabase: RoomDatabase() {
     abstract fun feedItemDao(): ItemDao
 }

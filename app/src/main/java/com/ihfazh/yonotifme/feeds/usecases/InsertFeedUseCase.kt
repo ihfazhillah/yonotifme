@@ -1,8 +1,8 @@
-package com.ihfazh.yonotifme.feeds.domain.repositories
+package com.ihfazh.yonotifme.feeds.usecases
 
 import com.ihfazh.yonotifme.feeds.domain.models.Item
 import io.reactivex.Completable
 
-interface FeedItemRepository {
+interface InsertFeedUseCase {
     fun insert(item: Item): Completable
 }
