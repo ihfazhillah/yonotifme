@@ -8,7 +8,7 @@ import io.reactivex.Completable
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class FeedItemRepositoryImpl @Inject constructor(var localDataSource: FeedDatabase): FeedItemRepository {
+class FeedItemRepositoryImpl @Inject constructor(private var localDataSource: FeedDatabase): FeedItemRepository {
     override fun insert(item: Item): Completable {
         return localDataSource.feedItemDao().insert(
             DataMapper.feedItemMapper(item)
@@ -20,6 +20,12 @@ class FeedItemRepositoryImpl @Inject constructor(var localDataSource: FeedDataba
             it.map {
                 DataMapper.feedEntityMapper(it)
             }
+        }
+    }
+
+    override fun detail(id: String): Flowable<Item> {
+        return localDataSource.feedItemDao().detail(id).map {
+            DataMapper.feedEntityMapper(it)
         }
     }
 }

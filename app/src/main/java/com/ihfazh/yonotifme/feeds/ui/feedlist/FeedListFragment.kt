@@ -10,6 +10,7 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import com.airbnb.epoxy.*
 import com.ihfazh.yonotifme.R
 import com.ihfazh.yonotifme.databinding.FragmentFeedListBinding
@@ -22,19 +23,24 @@ abstract class ItemModel: EpoxyModelWithHolder<ItemModel.Holder>(){
 
     @EpoxyAttribute lateinit var title: String
     @EpoxyAttribute lateinit var description: String
+    @EpoxyAttribute lateinit var doClick: () -> Unit
 
     override fun bind(holder: Holder) {
+        super.bind(holder)
         holder.title.text = title
         holder.description.text = description
+        holder.parent.setOnClickListener { doClick() }
     }
 
     class Holder: EpoxyHolder() {
         lateinit var title: TextView
         lateinit var description: TextView
+        lateinit var parent: View
 
         override fun bindView(itemView: View) {
             title = itemView.findViewById(R.id.text_title)
             description = itemView.findViewById(R.id.text_description)
+            parent = itemView
         }
 
     }
@@ -42,15 +48,21 @@ abstract class ItemModel: EpoxyModelWithHolder<ItemModel.Holder>(){
 }
 
 
-class ItemController: Typed2EpoxyController<List<Item>, Boolean>(){
+class ItemController(
+        private val onClickListener: ((item: Item) -> Unit)
+): Typed2EpoxyController<List<Item>, Boolean>(){
 
     override fun buildModels(items: List<Item>, loadingMore: Boolean) {
         items.forEach{
+
             item {
                 title(it.title)
                 description(it.description)
+                doClick { this@ItemController.onClickListener(it) }
                 id(it.guid)
             }
+
+
 
         }
     }
@@ -77,7 +89,14 @@ class FeedListFragment: Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val controller = ItemController()
+        val controller = ItemController(
+                onClickListener = {item ->
+                    run {
+                        val action = FeedListFragmentDirections.actionFeedListFragmentToFeedDetailFragment(item.guid)
+                        findNavController().navigate(action)
+                    }
+                }
+        )
 //        binding.rv.setControllerAndBuildModels(controller)
         binding.rv.setController(controller)
 //        binding.rv.requestModelBuild()

@@ -2,10 +2,7 @@ package com.ihfazh.yonotifme.di.modules
 
 import com.ihfazh.yonotifme.feeds.datasources.repositories.FeedItemRepositoryImpl
 import com.ihfazh.yonotifme.feeds.domain.repositories.FeedItemRepository
-import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCase
-import com.ihfazh.yonotifme.feeds.usecases.InsertFeedUseCaseImpl
-import com.ihfazh.yonotifme.feeds.usecases.ListFeedUseCase
-import com.ihfazh.yonotifme.feeds.usecases.ListFeedUseCaseImpl
+import com.ihfazh.yonotifme.feeds.usecases.*
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -24,4 +21,7 @@ class UseCaseModules {
     fun provideListFeedUseCase(feedItemRepository: FeedItemRepositoryImpl): ListFeedUseCase {
         return ListFeedUseCaseImpl(feedItemRepository)
     }
+
+    @Provides
+    fun provideDetailUseCase(feedItemRepository: FeedItemRepositoryImpl): DetailFeedUseCase = DetailFeedUseCaseImpl(feedItemRepository)
 }

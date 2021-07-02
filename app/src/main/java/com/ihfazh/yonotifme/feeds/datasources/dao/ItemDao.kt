@@ -15,4 +15,7 @@ interface ItemDao {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun insert(feedItem: FeedItemEntity): Completable
+
+    @Query("select * from feed where guid = :id")
+    fun detail(id: String): Flowable<FeedItemEntity>
 }

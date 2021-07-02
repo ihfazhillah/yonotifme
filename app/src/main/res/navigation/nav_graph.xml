@@ -10,5 +10,21 @@
         android:name="com.ihfazh.yonotifme.feeds.ui.feedlist.FeedListFragment"
         android:label="Feed List"
         tools:layout="@layout/fragment_feed_list"
-        />
+        >
+        <action
+            android:id="@+id/action_feedListFragment_to_feedDetailFragment"
+            app:destination="@id/feedDetailFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/feedDetailFragment"
+        android:name="com.ihfazh.yonotifme.feeds.ui.feeddetail.FeedDetailFragment"
+        android:label=""
+        tools:layout="@layout/fragment_feed_detail"
+        >
+        <argument
+            android:name="id"
+            app:argType="string" />
+    </fragment>
+
 </navigation>

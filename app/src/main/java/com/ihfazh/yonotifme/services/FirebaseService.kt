@@ -72,8 +72,6 @@ class YNMFirebaseMessagingService: FirebaseMessagingService() {
         }
 
 
-        remoteMessage.notification?.let {
-        }
     }
 
     private fun sendNotification(title: String, description: String) {
