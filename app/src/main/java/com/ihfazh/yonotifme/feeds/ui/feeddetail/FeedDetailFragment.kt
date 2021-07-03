@@ -2,6 +2,9 @@ package com.ihfazh.yonotifme.feeds.ui.feeddetail
 
 import android.os.Bundle
 import android.text.Html
+import android.text.method.LinkMovementMethod
+import android.text.util.Linkify
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -14,7 +17,7 @@ import com.ihfazh.yonotifme.databinding.FragmentFeedListBinding
 import com.ihfazh.yonotifme.feeds.ui.feedlist.FeedListViewModel
 import com.ihfazh.yonotifme.feeds.ui.feedlist.ItemController
 import dagger.hilt.android.AndroidEntryPoint
-
+import java.util.regex.Pattern
 
 
 @AndroidEntryPoint
@@ -41,6 +44,7 @@ class FeedDetailFragment: Fragment() {
         viewModel.feedDetail.observe(viewLifecycleOwner){
             binding.title.text = it.title
             binding.description.text = HtmlCompat.fromHtml(it.description, HtmlCompat.FROM_HTML_MODE_COMPACT)
+            binding.description.movementMethod = LinkMovementMethod.getInstance()
         }
     }
 
