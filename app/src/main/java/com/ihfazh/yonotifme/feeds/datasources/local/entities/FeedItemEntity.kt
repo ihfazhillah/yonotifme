@@ -1,4 +1,4 @@
-package com.ihfazh.yonotifme.feeds.datasources.entities
+package com.ihfazh.yonotifme.feeds.datasources.local.entities
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity

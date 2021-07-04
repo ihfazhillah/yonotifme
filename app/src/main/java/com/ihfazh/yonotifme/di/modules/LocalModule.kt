@@ -2,7 +2,7 @@ package com.ihfazh.yonotifme.di.modules
 
 import android.content.Context
 import androidx.room.Room
-import com.ihfazh.yonotifme.feeds.datasources.FeedDatabase
+import com.ihfazh.yonotifme.feeds.datasources.local.FeedDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

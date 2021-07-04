@@ -1,9 +1,9 @@
-package com.ihfazh.yonotifme.feeds.datasources
+package com.ihfazh.yonotifme.feeds.datasources.local
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import com.ihfazh.yonotifme.feeds.datasources.dao.ItemDao
-import com.ihfazh.yonotifme.feeds.datasources.entities.FeedItemEntity
+import com.ihfazh.yonotifme.feeds.datasources.local.dao.ItemDao
+import com.ihfazh.yonotifme.feeds.datasources.local.entities.FeedItemEntity
 
 @Database(
     entities = [FeedItemEntity::class],

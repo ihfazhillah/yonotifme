@@ -11,12 +11,16 @@ kapt {
     correctErrorTypes = true
 }
 
+def apiKeyPropertiesFile = rootProject.file("apiKey.properties")
+def apiKeyProperties = new Properties()
+apiKeyProperties.load(new FileInputStream(apiKeyPropertiesFile))
 
 android {
     compileSdkVersion 30
     buildToolsVersion "30.0.3"
 
     defaultConfig {
+        buildConfigField("String", "SERVER_GOOGLE_CLIENT_ID", apiKeyProperties["SERVER_GOOGLE_CLIENT_ID"])
         applicationId "com.ihfazh.yonotifme"
         minSdkVersion 21
         targetSdkVersion 30
@@ -55,6 +59,7 @@ android {
     }
 }
 
+
 dependencies {
 
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
@@ -73,6 +78,9 @@ dependencies {
     implementation platform("com.google.firebase:firebase-bom:$firebase_version")
     implementation "com.google.firebase:firebase-messaging-ktx"
     implementation "com.google.firebase:firebase-analytics-ktx"
+
+    // google auth
+    implementation "com.google.android.gms:play-services-auth:$play_service_auth_version"
 
     // room database
     implementation "androidx.room:room-runtime:$room_version"
@@ -99,5 +107,9 @@ dependencies {
     // epoxy
     implementation "com.airbnb.android:epoxy:$epoxy_version"
     kapt "com.airbnb.android:epoxy-processor:$epoxy_version"
+
+    // retrofit
+    implementation "com.squareup.retrofit2:retrofit:$retrofit_version"
+    implementation "com.squareup.retrofit2:converter-gson:$retrofit_version"
 
 }

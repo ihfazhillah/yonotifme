@@ -1,10 +1,10 @@
-package com.ihfazh.yonotifme.feeds.datasources.dao
+package com.ihfazh.yonotifme.feeds.datasources.local.dao
 
 import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
-import com.ihfazh.yonotifme.feeds.datasources.entities.FeedItemEntity
+import com.ihfazh.yonotifme.feeds.datasources.local.entities.FeedItemEntity
 import io.reactivex.Completable
 import io.reactivex.Flowable
 

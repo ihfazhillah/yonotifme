@@ -1,7 +1,7 @@
 package com.ihfazh.yonotifme.feeds.datasources.repositories
 
 import com.ihfazh.yonotifme.feeds.DataMapper
-import com.ihfazh.yonotifme.feeds.datasources.FeedDatabase
+import com.ihfazh.yonotifme.feeds.datasources.local.FeedDatabase
 import com.ihfazh.yonotifme.feeds.domain.models.Item
 import com.ihfazh.yonotifme.feeds.domain.repositories.FeedItemRepository
 import io.reactivex.Completable
